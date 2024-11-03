@@ -613,7 +613,7 @@ BOOL WINAPI DECLSPEC_HOTPATCH WriteProcessMemory( HANDLE process, void *addr, co
     if (!VirtualQueryEx( process, addr, &info, sizeof(info) ))
     {
         close_cross_process_connection( list );
-        return FALSE;
+        return set_ntstatus( NtWriteVirtualMemory( process, addr, buffer, size, bytes_written ));
     }
 
     switch (info.Protect)
